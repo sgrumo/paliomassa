@@ -23,8 +23,8 @@ const Combination = ({ team, index }: CombinationProps) => {
 
   return (
     <div className="flex flex-col mb-4">
-      <h2 className="font-bold">Combinazione {index + 1}</h2>
-      <h3 className="font-bold">Interni</h3>
+      <h2 className="font-bold text-xl">Combinazione {index + 1}</h2>
+      <h3 className="font-bold text-lg">Interni</h3>
       <div className="flex">{internals.map(athleteMapping)}</div>
       <h3 className="font-bold mt-2">Mediani</h3>
       <div className="flex">{medians.map(athleteMapping)}</div>

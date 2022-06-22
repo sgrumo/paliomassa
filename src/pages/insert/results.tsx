@@ -41,10 +41,14 @@ const ResultPage = () => {
 
   return (
     <Layout title="Risultati">
-      <button type="button" onClick={() => exportData()}>
-        Esporta i risultati
+      <button
+        className="bg-violet-500 p-4 rounded text-white mx-auto my-0 block"
+        type="button"
+        onClick={() => exportData()}
+      >
+        Scarica il file la squadra della morte
       </button>
-      <div className="grid grid-cols-2 grid-rows-1">{combinations}</div>
+      <div className="grid grid-cols-2">{combinations}</div>
     </Layout>
   );
 };

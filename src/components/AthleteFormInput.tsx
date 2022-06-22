@@ -22,22 +22,25 @@ const AthleteFormInput = ({
       .filter(({ checked }) => checked)
       .map(({ value }) => value as Role);
     const newAthlete = { ...athleteInput, roles };
+    setAthleteInput(newAthlete);
     updateAthlete(newAthlete);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAthlete = { ...athleteInput, name: e.target.value };
+    setAthleteInput(newAthlete);
     updateAthlete(newAthlete);
   };
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAthlete = { ...athleteInput, weight: parseFloat(e.target.value) };
+    setAthleteInput(newAthlete);
     updateAthlete(newAthlete);
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-x-4 items-center">
-      <label className="flex flex-col">
+    <div className="flex items-center w-full gap-8">
+      <label className="flex flex-col w-[20vw]">
         Nome combattente
         <input
           type="text"
@@ -47,7 +50,7 @@ const AthleteFormInput = ({
           value={athlete.name}
         />
       </label>
-      <label className="flex flex-col">
+      <label className="flex flex-col w-[8vw]">
         Peso
         <input
           type="number"
@@ -60,7 +63,7 @@ const AthleteFormInput = ({
           className="my-2 py-2 flex border border-gray-200 bg-white rounded "
         />
       </label>
-      <label className="flex flex-col">
+      <label className="flex flex-col w-[16vw]">
         Ruolo
         <Multiselect
           values={athlete.roles}
@@ -70,7 +73,7 @@ const AthleteFormInput = ({
       {index !== 0 && (
         <button
           onClick={() => deleteAthlete(index)}
-          className="bg-red-500 rounded text-white"
+          className="bg-red-500 rounded text-white px-4 py-2 mt-6"
           type="button"
         >
           X

@@ -11,7 +11,7 @@ import { Athlete } from "../../interfaces";
 
 const EMPTY_ATHLETE: Athlete = {
   name: "",
-  weight: undefined,
+  weight: 30,
   roles: [],
 };
 const IndexPage = () => {
@@ -54,6 +54,7 @@ const IndexPage = () => {
   const updateAthlete = (index: number, athlete: Athlete) => {
     const athletesCopy = [...athletes];
     athletesCopy[index] = athlete;
+    console.log(athletes, index, athletesCopy);
     setAthletes(athletesCopy);
   };
 
@@ -69,19 +70,27 @@ const IndexPage = () => {
 
   return (
     <Layout title="Intro">
-      <h1>Ciao amici del Palio 👋</h1>
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={onSubmit}
+        className="w-screen flex flex-col justify-center"
+      >
+        <h2 className="text-2xl font-bold">LA FORMAZIONE DEL PORCO</h2>
         {athleteInputs}
-        <button
-          className="bg-orange-500 p-2 rounded text-white"
-          type="button"
-          onClick={addAthlete}
-        >
-          Aggiungi un posto a tavola
-        </button>
-        <button className="bg-violet-500 p-2 rounded text-white" type="submit">
-          Fammi vedere sta cazzo di squadra
-        </button>
+        <div>
+          <button
+            className="bg-orange-500 p-2 rounded text-white mt-8"
+            type="button"
+            onClick={addAthlete}
+          >
+            Aggiungi un posto a tavola per uno grosso merz
+          </button>
+          <button
+            className="bg-violet-500 p-2 rounded text-white ml-8"
+            type="submit"
+          >
+            Fammi vedere sta cazzo di squadra
+          </button>
+        </div>
       </form>
     </Layout>
   );
