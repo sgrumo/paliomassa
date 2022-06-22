@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { MultiselectOption } from "../interfaces";
+import { MultiselectOption, Role } from "../interfaces";
 import Dropdown from "./Dropdown";
 
 export interface MultiSelectProps {
-  options: MultiselectOption[];
   handleChangeSelected: (selected: MultiselectOption[]) => void;
+  values: Role[];
 }
-
-const Multiselect = ({ options, handleChangeSelected }: MultiSelectProps) => {
+const options = [
+  { name: "Interno", value: Role.INTERNAL, checked: false },
+  { name: "Mediano", value: Role.MEDIAN, checked: false },
+  { name: "Esterno", value: Role.EXTERNAL, checked: false },
+];
+const Multiselect = ({ values, handleChangeSelected }: MultiSelectProps) => {
   const [dropdown, setDropdown] = useState(false);
   const [items, setItems] = useState<MultiselectOption[]>(options);
 
@@ -23,20 +27,23 @@ const Multiselect = ({ options, handleChangeSelected }: MultiSelectProps) => {
     handleChangeSelected(copyItems);
   };
 
-  const selected = items
-    .filter(({ checked }) => checked)
-    .map((tag, index) => {
-      return (
-        <div
-          key={index}
-          className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-teal-700 bg-white border border-teal-300"
-        >
-          <span className="text-xs font-normal leading-none max-w-full flex-initial">
-            {tag.name}
-          </span>
-        </div>
-      );
-    });
+  const checkedOption = options.map((option) => ({
+    ...option,
+    checked: values.includes(option.value),
+  }));
+
+  const selected = values.map((tag, index) => {
+    return (
+      <div
+        key={index}
+        className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-teal-700 bg-white border border-teal-300"
+      >
+        <span className="text-xs font-normal leading-none max-w-full flex-initial">
+          {tag}
+        </span>
+      </div>
+    );
+  });
 
   return (
     <>
@@ -50,7 +57,7 @@ const Multiselect = ({ options, handleChangeSelected }: MultiSelectProps) => {
           </div>
           {dropdown ? (
             <Dropdown
-              options={items}
+              options={checkedOption}
               toggleChecked={toggleCheck}
               clickOutside={() => setDropdown(false)}
             />

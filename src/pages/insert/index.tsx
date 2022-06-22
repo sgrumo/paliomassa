@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getCombinations } from "../../../utils/combination";
+import { sampleAthletes } from "../../../utils/sample-data";
 import AthleteFormInput from "../../components/AthleteFormInput";
 import Layout from "../../components/Layout";
 import { Athlete } from "../../interfaces";
@@ -9,11 +12,17 @@ const EMPTY_ATHLETE: Athlete = {
   roles: [],
 };
 const IndexPage = () => {
-  const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [athletes, setAthletes] = useState<Athlete[]>(sampleAthletes);
+  const router = useRouter();
 
-  const onSubmit = (data) => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
     if (!athletes.every((athlete) => athlete.roles.length > 0)) {
-      alert("Che cazzo fai, dai un ruolo a tutti ");
+      alert("Ma che cazzo fai, dai almeno un ruolo a tutti");
+    } else {
+      getCombinations(athletes);
+      router.push("/insert/results");
     }
   };
 
@@ -22,12 +31,18 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
-    addAthlete();
+    // addAthlete();
   }, []);
 
   const deleteAthlete = (index: number) => {
     const athletesCopy = [...athletes];
     athletesCopy.splice(index, 1);
+    setAthletes(athletesCopy);
+  };
+
+  const updateAthlete = (index: number, athlete: Athlete) => {
+    const athletesCopy = [...athletes];
+    athletesCopy[index] = athlete;
     setAthletes(athletesCopy);
   };
 
@@ -37,6 +52,7 @@ const IndexPage = () => {
       key={index}
       index={index}
       deleteAthlete={deleteAthlete}
+      updateAthlete={(athlete) => updateAthlete(index, athlete)}
     />
   ));
 

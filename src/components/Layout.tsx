@@ -29,7 +29,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
         | <a href="/api/users">Users API</a>
       </nav> */}
     </header>
-    <div className="container mx-auto px-8">{children}</div>
+    <div className="container h-full px-8 bg-slate-400">{children}</div>
   </>
 );
 

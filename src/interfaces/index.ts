@@ -10,9 +10,9 @@ export type User = {
 };
 
 export enum Role {
-  INTERNAL = "interno",
-  MEDIAN = "median",
-  EXTERNAL = "esterno",
+  INTERNAL = "Interno",
+  MEDIAN = "Mediano",
+  EXTERNAL = "Esterno",
 }
 
 export interface Athlete {
@@ -21,8 +21,25 @@ export interface Athlete {
   roles: Role[];
 }
 
+export interface SingleRoleAthlete {
+  name: string;
+  weight: number;
+  role: Role;
+}
+
 export interface MultiselectOption {
   name: string;
   value: string;
   checked: boolean;
 }
+
+export type AthleteInTeam = SingleRoleAthlete[];
+
+export interface Team {
+  internals: AthleteInTeam;
+  medians: AthleteInTeam;
+  externals: AthleteInTeam;
+  weight: number;
+}
+
+export type Result = Team[];

@@ -6,19 +6,33 @@ export interface AthleteFormInputProps {
   index: number;
   athlete: Athlete;
   deleteAthlete: (index: number) => void;
+  updateAthlete: (athlete: Athlete) => void;
 }
 
-const AthleteFormInput = ({ index, deleteAthlete }: AthleteFormInputProps) => {
-  const [_, selectRoles] = useState<MultiselectOption[]>([]);
-
-  const options = [
-    { name: "Interno", value: Role.INTERNAL, checked: false },
-    { name: "Mediano", value: Role.MEDIAN, checked: false },
-    { name: "Esterno", value: Role.EXTERNAL, checked: false },
-  ];
+const AthleteFormInput = ({
+  index,
+  athlete,
+  deleteAthlete,
+  updateAthlete,
+}: AthleteFormInputProps) => {
+  const [athleteInput, setAthleteInput] = useState<Athlete>(athlete);
 
   const handleChangeSelected = (selected: MultiselectOption[]) => {
-    selectRoles(selected);
+    const roles = selected
+      .filter(({ checked }) => checked)
+      .map(({ value }) => value as Role);
+    const newAthlete = { ...athleteInput, roles };
+    updateAthlete(newAthlete);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAthlete = { ...athleteInput, name: e.target.value };
+    updateAthlete(newAthlete);
+  };
+
+  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAthlete = { ...athleteInput, weight: parseFloat(e.target.value) };
+    updateAthlete(newAthlete);
   };
 
   return (
@@ -28,7 +42,9 @@ const AthleteFormInput = ({ index, deleteAthlete }: AthleteFormInputProps) => {
         <input
           type="text"
           required
-          className="my-2 py-2 flex border border-gray-200 bg-white rounded "
+          className="my-2 py-2 flex border border-gray-200 bg-white rounded"
+          onChange={handleNameChange}
+          value={athlete.name}
         />
       </label>
       <label className="flex flex-col">
@@ -38,14 +54,17 @@ const AthleteFormInput = ({ index, deleteAthlete }: AthleteFormInputProps) => {
           min={30}
           max={200}
           required
+          onChange={handleWeightChange}
+          value={athlete.weight}
+          step="0.01"
           className="my-2 py-2 flex border border-gray-200 bg-white rounded "
         />
       </label>
       <label className="flex flex-col">
         Ruolo
         <Multiselect
+          values={athlete.roles}
           handleChangeSelected={handleChangeSelected}
-          options={options}
         />
       </label>
       {index !== 0 && (
