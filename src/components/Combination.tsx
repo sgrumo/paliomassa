@@ -8,9 +8,9 @@ export interface CombinationProps {
 const Combination = ({ team, index }: CombinationProps) => {
   const { internals, medians, externals, weight } = team;
 
-  const athleteMapping = (athl: SingleRoleAthlete) => {
+  const athleteMapping = (athl: SingleRoleAthlete, index: number) => {
     return (
-      <div className="flex flex-col mr-8">
+      <div className="flex flex-col mr-8" key={index}>
         <p>
           <i>Nome:</i> {athl.name}
         </p>

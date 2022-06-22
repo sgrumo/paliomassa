@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
-import { COMBINATION_KEY } from "../../../utils/combination";
+import { COMBINATION_KEY, TEAM_KEY } from "../../../utils/combination";
 import Combination from "../../components/Combination";
 import Layout from "../../components/Layout";
-import { Team } from "../../interfaces";
+import { Athlete, Team } from "../../interfaces";
 
 const ResultPage = () => {
-  const [teams, setCombs] = useState<Team[]>([]);
+  const [combs, setCombs] = useState<Team[]>([]);
+  const [team, setTeam] = useState<Athlete[]>([]);
 
   useEffect(() => {
     const allCombinations = JSON.parse(
       sessionStorage.getItem(COMBINATION_KEY)
     ) as Team[];
+
     setCombs(allCombinations);
+
+    const athletes = JSON.parse(sessionStorage.getItem(TEAM_KEY)) as Athlete[];
+    setTeam(athletes);
   }, []);
 
   const exportData = () => {
-    const teamData = [];
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(teamData)
+      JSON.stringify(team)
     )}`;
     const link = document.createElement("a");
     link.href = jsonString;
-    link.download = "data.json";
+    link.download = "team.json";
 
     link.click();
   };
@@ -29,7 +33,7 @@ const ResultPage = () => {
   const sortPerWeightDescending = (team1: Team, team2: Team): number =>
     team2.weight - team1.weight;
 
-  const combinations = teams
+  const combinations = combs
     .sort(sortPerWeightDescending)
     .map((comb, index) => {
       return <Combination team={comb} index={index} key={index} />;
@@ -37,6 +41,9 @@ const ResultPage = () => {
 
   return (
     <Layout title="Risultati">
+      <button type="button" onClick={() => exportData()}>
+        Esporta i risultati
+      </button>
       <div className="grid grid-cols-2 grid-rows-1">{combinations}</div>
     </Layout>
   );

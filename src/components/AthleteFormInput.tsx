@@ -36,9 +36,9 @@ const AthleteFormInput = ({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 items-center">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-x-4 items-center">
       <label className="flex flex-col">
-        Nome
+        Nome combattente
         <input
           type="text"
           required
@@ -70,10 +70,10 @@ const AthleteFormInput = ({
       {index !== 0 && (
         <button
           onClick={() => deleteAthlete(index)}
-          className="bg-red-500 py-2 rounded text-white"
+          className="bg-red-500 rounded text-white"
           type="button"
         >
-          Cancella stammerda
+          X
         </button>
       )}
     </div>

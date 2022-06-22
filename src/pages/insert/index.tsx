@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getCombinations } from "../../../utils/combination";
-import { sampleAthletes } from "../../../utils/sample-data";
+import {
+  getCombinations,
+  TEAM_KEY,
+  TEAM_LENGTH,
+} from "../../../utils/combination";
 import AthleteFormInput from "../../components/AthleteFormInput";
 import Layout from "../../components/Layout";
 import { Athlete } from "../../interfaces";
@@ -12,7 +15,7 @@ const EMPTY_ATHLETE: Athlete = {
   roles: [],
 };
 const IndexPage = () => {
-  const [athletes, setAthletes] = useState<Athlete[]>(sampleAthletes);
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
   const router = useRouter();
 
   const onSubmit = (e) => {
@@ -20,6 +23,8 @@ const IndexPage = () => {
 
     if (!athletes.every((athlete) => athlete.roles.length > 0)) {
       alert("Ma che cazzo fai, dai almeno un ruolo a tutti");
+    } else if (athletes.length < TEAM_LENGTH) {
+      alert("Ma che cazzo fai, metti almeno 6 combattenti");
     } else {
       getCombinations(athletes);
       router.push("/insert/results");
@@ -27,11 +32,17 @@ const IndexPage = () => {
   };
 
   const addAthlete = () => {
-    setAthletes([...athletes, EMPTY_ATHLETE]);
+    setAthletes((oldArray) => [...oldArray, EMPTY_ATHLETE]);
   };
 
   useEffect(() => {
-    // addAthlete();
+    const team = sessionStorage.getItem(TEAM_KEY);
+    if (team !== null) {
+      const jsonTeam = JSON.parse(team);
+      setAthletes(jsonTeam);
+    } else {
+      addAthlete();
+    }
   }, []);
 
   const deleteAthlete = (index: number) => {

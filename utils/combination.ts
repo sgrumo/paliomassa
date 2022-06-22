@@ -5,7 +5,9 @@ export const MAX_WEIGHT = 540;
 export const MAX_ATHLETE_PER_ROLE = 2;
 export const MAX_ROLES = 3;
 export const TEAM_LENGTH = MAX_ATHLETE_PER_ROLE * MAX_ROLES;
-export const COMBINATION_KEY = "TEAM_COMBINATION";
+
+export const COMBINATION_KEY = "COMBINATION";
+export const TEAM_KEY = "TEAM";
 
 export const getCombinations = (athletes: Athlete[]) => {
   // const teams: Team[] = [];
@@ -56,6 +58,7 @@ export const getCombinations = (athletes: Athlete[]) => {
   });
 
   sessionStorage.setItem(COMBINATION_KEY, JSON.stringify(team));
+  sessionStorage.setItem(TEAM_KEY, JSON.stringify(athletes));
 };
 
 const subset = <T>(arra: T[], combination: number): T[][] => {

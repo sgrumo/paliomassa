@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 type Props = {
   children?: ReactNode;
@@ -29,7 +29,9 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
         | <a href="/api/users">Users API</a>
       </nav> */}
     </header>
-    <div className="container h-full px-8 bg-slate-400">{children}</div>
+    <div className="container min-h-[100vh] h-[100vh] w-full px-8 bg-slate-400">
+      {children}
+    </div>
   </>
 );
 
