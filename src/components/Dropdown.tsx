@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MultiselectOption } from "../interfaces";
 
 export interface DropdownProps {
@@ -29,7 +29,6 @@ const Dropdown = ({ options, toggleChecked, clickOutside }: DropdownProps) => {
 
   const wrapperRef = useRef(null);
   useOutsideComponent(wrapperRef);
-
   const optionList = options.map(({ checked, name }, key) => {
     return (
       <div

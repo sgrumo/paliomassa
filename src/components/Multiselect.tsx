@@ -1,19 +1,14 @@
-import React, { useState } from "react";
-import { MultiselectOption, Role } from "../interfaces";
+import { useState } from "react";
+import { MultiselectOption } from "../interfaces";
 import Dropdown from "./Dropdown";
 
 export interface MultiSelectProps {
-  handleChangeSelected: (selected: MultiselectOption[]) => void;
-  values: Role[];
+  handleChangeSelected: (index: number) => void;
+  options: MultiselectOption[];
 }
-const options = [
-  { name: "Interno", value: Role.INTERNAL, checked: false },
-  { name: "Mediano", value: Role.MEDIAN, checked: false },
-  { name: "Esterno", value: Role.EXTERNAL, checked: false },
-];
-const Multiselect = ({ values, handleChangeSelected }: MultiSelectProps) => {
+
+const Multiselect = ({ options, handleChangeSelected }: MultiSelectProps) => {
   const [dropdown, setDropdown] = useState(false);
-  const [items, setItems] = useState<MultiselectOption[]>(options);
 
   const toogleDropdown = (e) => {
     e.preventDefault();
@@ -21,29 +16,32 @@ const Multiselect = ({ values, handleChangeSelected }: MultiSelectProps) => {
   };
   // adds new item to multiselect
   const toggleCheck = (index: number) => {
-    const copyItems = [...items];
-    copyItems[index].checked = !copyItems[index].checked;
-    setItems(copyItems);
-    handleChangeSelected(copyItems);
+    // const copyItems = [...items];
+    // console.log(index, copyItems);
+    // copyItems[index].checked = !copyItems[index].checked;
+    // setItems(copyItems);
+    handleChangeSelected(index);
   };
 
   const checkedOption = options.map((option) => ({
     ...option,
-    checked: values.includes(option.value),
+    checked: option.checked,
   }));
 
-  const selected = values.map((tag, index) => {
-    return (
-      <div
-        key={index}
-        className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-teal-700 bg-white border border-teal-300"
-      >
-        <span className="text-xs font-normal leading-none max-w-full flex-initial">
-          {tag}
-        </span>
-      </div>
-    );
-  });
+  const selected = options
+    .filter(({ checked }) => checked)
+    .map((tag, index) => {
+      return (
+        <div
+          key={index}
+          className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-teal-700 bg-white border border-teal-300"
+        >
+          <span className="text-xs font-normal leading-none max-w-full flex-initial">
+            {tag.name}
+          </span>
+        </div>
+      );
+    });
 
   return (
     <>

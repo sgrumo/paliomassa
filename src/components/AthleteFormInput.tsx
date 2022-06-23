@@ -16,11 +16,31 @@ const AthleteFormInput = ({
   updateAthlete,
 }: AthleteFormInputProps) => {
   const [athleteInput, setAthleteInput] = useState<Athlete>(athlete);
+  const [rolesOptions, setRolesOptions] = useState<MultiselectOption[]>([
+    {
+      name: "Interno",
+      value: Role.INTERNAL,
+      checked: athlete.roles.includes(Role.INTERNAL),
+    },
+    {
+      name: "Mediano",
+      value: Role.MEDIAN,
+      checked: athlete.roles.includes(Role.MEDIAN),
+    },
+    {
+      name: "Esterno",
+      value: Role.EXTERNAL,
+      checked: athlete.roles.includes(Role.EXTERNAL),
+    },
+  ]);
 
-  const handleChangeSelected = (selected: MultiselectOption[]) => {
-    const roles = selected
+  const handleChangeSelected = (index: number) => {
+    const copyRoles = [...rolesOptions];
+    copyRoles[index].checked = !copyRoles[index].checked;
+    setRolesOptions(copyRoles);
+    const roles = copyRoles
       .filter(({ checked }) => checked)
-      .map(({ value }) => value as Role);
+      .map((option) => option.value) as Role[];
     const newAthlete = { ...athleteInput, roles };
     setAthleteInput(newAthlete);
     updateAthlete(newAthlete);
@@ -66,7 +86,7 @@ const AthleteFormInput = ({
       <label className="flex flex-col w-[16vw]">
         Ruolo
         <Multiselect
-          values={athlete.roles}
+          options={rolesOptions}
           handleChangeSelected={handleChangeSelected}
         />
       </label>

@@ -54,7 +54,6 @@ const IndexPage = () => {
   const updateAthlete = (index: number, athlete: Athlete) => {
     const athletesCopy = [...athletes];
     athletesCopy[index] = athlete;
-    console.log(athletes, index, athletesCopy);
     setAthletes(athletesCopy);
   };
 
