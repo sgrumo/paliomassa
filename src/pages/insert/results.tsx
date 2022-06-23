@@ -30,6 +30,10 @@ const ResultPage = () => {
     link.click();
   };
 
+  const savePDF = () => {
+    window.print();
+  };
+
   const sortPerWeightDescending = (team1: Team, team2: Team): number =>
     team2.weight - team1.weight;
 
@@ -41,14 +45,23 @@ const ResultPage = () => {
 
   return (
     <Layout title="Risultati">
-      <button
-        className="bg-violet-500 p-4 rounded text-white mx-auto my-0 block"
-        type="button"
-        onClick={() => exportData()}
-      >
-        Scarica il file la squadra della morte
-      </button>
-      <div className="grid grid-cols-2">{combinations}</div>
+      <div className="flex">
+        <button
+          className="bg-violet-500 p-4 rounded text-white mx-auto my-0 block"
+          type="button"
+          onClick={() => exportData()}
+        >
+          Scarica il file dello squadrone della morte
+        </button>
+        <button
+          className="bg-green-500 p-4 rounded text-white mx-auto my-0 block"
+          type="button"
+          onClick={() => savePDF()}
+        >
+          Salva il PDF di tutte le combinazioni infernali
+        </button>
+      </div>
+      <div className="grid grid-cols-2 mt-4">{combinations}</div>
     </Layout>
   );
 };

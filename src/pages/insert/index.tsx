@@ -69,13 +69,10 @@ const IndexPage = () => {
 
   return (
     <Layout title="Intro">
-      <form
-        onSubmit={onSubmit}
-        className="w-screen flex flex-col justify-center"
-      >
-        <h2 className="text-2xl font-bold">LA FORMAZIONE DEL PORCO</h2>
+      <form onSubmit={onSubmit} className="w-full flex flex-col justify-center">
+        <h2 className="text-2xl font-bold">LA FORMAZIONE DEL PORCO 🐗</h2>
         {athleteInputs}
-        <div>
+        <div className="flex lg:block flex-col gap-4">
           <button
             className="bg-orange-500 p-2 rounded text-white mt-8"
             type="button"
@@ -84,7 +81,7 @@ const IndexPage = () => {
             Aggiungi un posto a tavola per uno grosso merz
           </button>
           <button
-            className="bg-violet-500 p-2 rounded text-white ml-8"
+            className="bg-violet-500 p-2 rounded text-white lg:ml-8"
             type="submit"
           >
             Fammi vedere sta cazzo di squadra

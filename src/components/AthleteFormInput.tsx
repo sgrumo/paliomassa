@@ -59,8 +59,8 @@ const AthleteFormInput = ({
   };
 
   return (
-    <div className="flex items-center w-full gap-8">
-      <label className="flex flex-col w-[20vw]">
+    <div className="flex flex-col lg:flex-row items-center w-full md:gap-8">
+      <label className="flex flex-col w-full lg:w-[20vw]">
         Nome combattente
         <input
           type="text"
@@ -70,7 +70,7 @@ const AthleteFormInput = ({
           value={athlete.name}
         />
       </label>
-      <label className="flex flex-col w-[8vw]">
+      <label className="flex flex-col w-full lg:w-[8vw]">
         Peso
         <input
           type="number"
@@ -83,7 +83,7 @@ const AthleteFormInput = ({
           className="my-2 py-2 flex border border-gray-200 bg-white rounded "
         />
       </label>
-      <label className="flex flex-col w-[16vw]">
+      <label className="flex flex-col w-full lg:w-[16vw]">
         Ruolo
         <Multiselect
           options={rolesOptions}
@@ -96,7 +96,7 @@ const AthleteFormInput = ({
           className="bg-red-500 rounded text-white px-4 py-2 mt-6"
           type="button"
         >
-          X
+          <span className="lg:hidden">Cancella combattente </span>X
         </button>
       )}
     </div>

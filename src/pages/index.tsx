@@ -18,7 +18,7 @@ const IndexPage = () => {
     <Layout title="Intro">
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-4xl mt-16 font-bold">Ciao amici del Palio 👋</h1>
-        <div className="flex justify-evenly w-screen mt-16">
+        <div className="flex flex-col lg:flex-row justify-evenly w-full mt-16 ">
           <label className="flex flex-col mb-2 text-xl font-bold">
             Se hai scaricato un JSON con il team puoi caricarlo:
             <input
@@ -36,7 +36,7 @@ const IndexPage = () => {
             }}
             type="button"
           >
-            Forma un team da nuovi combattenti
+            Forma un team con nuovi combattenti
           </button>
         </div>
       </div>
