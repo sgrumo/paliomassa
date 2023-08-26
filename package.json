@@ -9,18 +9,19 @@
   "dependencies": {
     "jspdf": "^2.5.1",
     "next": "latest",
+    "npm-check": "^6.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "7.31.1"
+    "react-hook-form": "^7.45.4"
   },
   "devDependencies": {
     "@types/node": "12.12.21",
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.1",
-    "autoprefixer": "10.4.7",
-    "postcss": "8.4.13",
-    "sass": "1.51.0",
-    "tailwindcss": "3.0.24",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.28",
+    "sass": "^1.66.1",
+    "tailwindcss": "^3.3.3",
     "typescript": "4.7.4"
   }
 }
