@@ -79,7 +79,7 @@ const AthleteFormInput = ({
           required
           onChange={handleWeightChange}
           value={athlete.weight}
-          step="0.01"
+          step="0.5"
           className="my-2 py-2 flex border border-gray-200 bg-white rounded "
         />
       </label>
