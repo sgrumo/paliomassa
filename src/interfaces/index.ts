@@ -19,6 +19,8 @@ export interface Athlete {
   name: string;
   weight: number;
   roles: Role[];
+  excluded: boolean;
+  mustBeInTheTeam: boolean;
 }
 
 export interface SingleRoleAthlete {

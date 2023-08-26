@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
-  getCombinations,
   TEAM_KEY,
   TEAM_LENGTH,
+  getCombinations,
 } from "../../../utils/combination";
 import AthleteFormInput from "../../components/AthleteFormInput";
 import Layout from "../../components/Layout";
@@ -13,6 +13,8 @@ const EMPTY_ATHLETE: Athlete = {
   name: "",
   weight: 30,
   roles: [],
+  excluded: false,
+  mustBeInTheTeam: false
 };
 const IndexPage = () => {
   const [athletes, setAthletes] = useState<Athlete[]>([]);
@@ -25,6 +27,8 @@ const IndexPage = () => {
       alert("Ma che cazzo fai, dai almeno un ruolo a tutti");
     } else if (athletes.length < TEAM_LENGTH) {
       alert("Ma che cazzo fai, metti almeno 6 combattenti");
+    } else if (athletes.filter(athlete => athlete.excluded === false).length < TEAM_LENGTH) {
+      alert("Ma che cazzo fai, hai escluso troppi combattenti");
     } else {
       getCombinations(athletes);
       router.push("/insert/results");
@@ -57,6 +61,18 @@ const IndexPage = () => {
     setAthletes(athletesCopy);
   };
 
+  const excludeAthlete = (index: number, excluded: boolean) => {
+    const athletesCopy = [...athletes];
+    athletesCopy[index].excluded = excluded;
+    setAthletes(athletesCopy);
+  }
+
+  const forceAthleteInTheTeam = (index: number, force: boolean) => {
+    const athletesCopy = [...athletes];
+    athletesCopy[index].mustBeInTheTeam = force;
+    setAthletes(athletesCopy);
+  }
+
   const athleteInputs = athletes.map((athlete, index) => (
     <AthleteFormInput
       athlete={athlete}
@@ -64,12 +80,14 @@ const IndexPage = () => {
       index={index}
       deleteAthlete={deleteAthlete}
       updateAthlete={(athlete) => updateAthlete(index, athlete)}
+      excludeAthlete={(excluded) => excludeAthlete(index, excluded)}
+      forceAtlheteInTheTeam={(force) => forceAthleteInTheTeam(index, force)}
     />
   ));
 
   return (
     <Layout title="Intro">
-      <form onSubmit={onSubmit} className="w-full flex flex-col justify-center">
+      <form onSubmit={onSubmit} className="w-full flex flex-col gap-y-8 justify-center">
         <h2 className="text-2xl font-bold">LA FORMAZIONE DEL PORCO 🐗</h2>
         {athleteInputs}
         <div className="flex lg:block flex-col gap-4">

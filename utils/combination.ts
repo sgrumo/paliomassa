@@ -12,7 +12,7 @@ export const TEAM_KEY = "TEAM";
 export const getCombinations = (athletes: Athlete[]) => {
   // const teams: Team[] = [];
 
-  const nra: SingleRoleAthlete[] = athletes.flatMap((athlete) =>
+  const nra: SingleRoleAthlete[] = athletes.filter(athlete => athlete.excluded !== true).flatMap((athlete) =>
     athlete.roles.map((role) => ({
       role,
       name: athlete.name,
@@ -46,16 +46,26 @@ export const getCombinations = (athletes: Athlete[]) => {
     ) {
       return false;
     }
+
     return true;
   });
 
-  const team: Team[] = filteredTeams.map((singleTeam) => {
-    const internals = singleTeam.filter((athl) => athl.role === Role.INTERNAL);
-    const externals = singleTeam.filter((athl) => athl.role === Role.EXTERNAL);
-    const medians = singleTeam.filter((athl) => athl.role === Role.MEDIAN);
-    const weight = singleTeam.reduce((acc, curr) => (acc += curr.weight), 0);
-    return { internals, externals, medians, weight };
-  });
+
+
+  const team: Team[] = filteredTeams
+    .filter(team => {
+      const athletesMustBeInTeam = athletes.filter(athlete => athlete.mustBeInTheTeam);
+      const teamAthleteNames = team.map(athl => athl.name);
+
+      return athletesMustBeInTeam.every(athlete => teamAthleteNames.includes(athlete.name));
+    })
+    .map((singleTeam) => {
+      const internals = singleTeam.filter((athl) => athl.role === Role.INTERNAL);
+      const externals = singleTeam.filter((athl) => athl.role === Role.EXTERNAL);
+      const medians = singleTeam.filter((athl) => athl.role === Role.MEDIAN);
+      const weight = singleTeam.reduce((acc, curr) => (acc += curr.weight), 0);
+      return { internals, externals, medians, weight };
+    });
 
   sessionStorage.setItem(COMBINATION_KEY, JSON.stringify(team));
   sessionStorage.setItem(TEAM_KEY, JSON.stringify(athletes));

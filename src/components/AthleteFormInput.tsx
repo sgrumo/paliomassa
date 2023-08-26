@@ -7,6 +7,8 @@ export interface AthleteFormInputProps {
   athlete: Athlete;
   deleteAthlete: (index: number) => void;
   updateAthlete: (athlete: Athlete) => void;
+  excludeAthlete: (excluded: boolean) => void;
+  forceAtlheteInTheTeam: (force: boolean) => void
 }
 
 const AthleteFormInput = ({
@@ -14,6 +16,8 @@ const AthleteFormInput = ({
   athlete,
   deleteAthlete,
   updateAthlete,
+  excludeAthlete,
+  forceAtlheteInTheTeam
 }: AthleteFormInputProps) => {
   const [athleteInput, setAthleteInput] = useState<Athlete>(athlete);
   const [rolesOptions, setRolesOptions] = useState<MultiselectOption[]>([
@@ -61,7 +65,7 @@ const AthleteFormInput = ({
   return (
     <div className="flex flex-col lg:flex-row items-center w-full md:gap-8">
       <label className="flex flex-col w-full lg:w-[20vw]">
-        Nome combattente
+        Nome combattente #{index + 1}
         <input
           type="text"
           required
@@ -90,10 +94,28 @@ const AthleteFormInput = ({
           handleChangeSelected={handleChangeSelected}
         />
       </label>
+      <label className={"flex flex-col items-center"}>
+        Escludi
+        <input
+          onChange={(event) => excludeAthlete(event.target.checked)}
+          type="checkbox"
+          className="w-[16px] h-[16px]"
+          defaultChecked={athlete.excluded}
+        />
+      </label>
+      <label className="flex flex-col items-center">
+        Forza presenza
+        <input
+          onChange={(event) => forceAtlheteInTheTeam(event.target.checked)}
+          type="checkbox"
+          className="w-[16px] h-[16px]"
+          defaultChecked={athlete.mustBeInTheTeam}
+        />
+      </label>
       {index !== 0 && (
         <button
           onClick={() => deleteAthlete(index)}
-          className="bg-red-500 rounded text-white px-4 py-2 mt-6"
+          className="bg-red-500 rounded text-white px-4 py-2 mt-6 md:ml-10"
           type="button"
         >
           <span className="lg:hidden">Cancella combattente </span>X
